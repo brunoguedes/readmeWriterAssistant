@@ -1,17 +1,24 @@
-Here's a generated README.md for your project:
+# Readme Writer Assistant
 
-# README Writer Assistant
+Readme Writer Assistant is a Python-based tool designed to help developers create high-quality README files for their projects. It provides a simple and intuitive interface for generating README files in Markdown format, ensuring that all essential information is included.
 
-README Writer Assistant is a Python project that generates README.md files for a given project structure. It uses language models like GPT-4, GPT-3.5 Turbo, and Claude3 Opus to generate the content of the README based on the project's file structure and file contents.
+## Features
+
+- Generates README files in Markdown format
+- Includes a summary of the project and its features
+- Provides a high-level overview of the code and project structure
+- Offers installation instructions and dependency information
+- Includes instructions on how to configure and use the tool
+- Acknowledges third-party code and provides contribution guidelines
+- Includes license information
+- Supports multiple language models, including Claude3 Opus, GPT-3.5 Turbo, GPT-4, llama3, llama3 Groq, openhermes, mistral, and mixtral
 
 ## Project Structure
-
-The project has the following file structure:
 
 ```
 ├── .env
 ├── .env_example
-├── poetry.lock
+├── LICENSE
 ├── pyproject.toml
 └── src
     ├── app.py
@@ -21,50 +28,92 @@ The project has the following file structure:
         └── llms.py
 ```
 
+The `src/readmewriterassistant/__init__.py` file is an empty file that marks the `readmewriterassistant` directory as a Python package. It allows the modules within the package to be imported and used in other parts of the project.
+
+The `src/readmewriterassistant/files_manager.py` file contains the `FilesManager` class, which provides methods for listing files, formatting the file tree, and reading file contents.
+
+The `src/readmewriterassistant/llms.py` file contains the `LLMs` class, which manages the available language models and their configurations. It provides the following methods:
+
+- `__init__(self, temperature=0.1)`: Initializes the `LLMs` class with a specified temperature and loads the environment variables from the `.env` file.
+- `get_llm(self, llm_name)`: Returns the language model instance based on the provided `llm_name`.
+- `get_max_context_length(self, llm_name)`: Returns the maximum context length for the specified `llm_name`.
+- `get_available_llms(self)`: Returns a list of available language models.
+
+## Installation
+
+1. Clone the repository:
+
+```
+git clone https://github.com/brunoguedes/readmewriterassistant.git
+```
+
+2. Navigate to the project directory:
+
+```
+cd readmewriterassistant
+```
+
+3. Install the required dependencies using Poetry:
+
+```
+poetry install
+```
+
 ## Dependencies
 
-The project uses the following main dependencies:
+- Python 3.12
+- Streamlit 1.33.0
+- python-dotenv 1.0.1
+- langchain 0.1.16
+- langchain-community 0.0.34
+- langchain-anthropic 0.1.11
+- langchain-openai 0.1.3
+- langchain-groq 0.1.3
 
-- streamlit: For building the web application interface
-- python-dotenv: For loading environment variables from .env file
-- langchain: For integrating with language models
-- langchain-community: For additional LangChain integrations
-- langchain-anthropic: For integrating with Anthropic's language models
-- langchain-openai: For integrating with OpenAI's language models
+## Configuration and Usage
 
-The full list of dependencies can be found in the `pyproject.toml` file.
+1. Create a copy of the `.env_example` file and rename it to `.env`.
 
-## Configuration
-
-The project uses environment variables for configuration. The `.env` file contains the API keys for OpenAI and Anthropic. An example `.env` file is provided as `.env_example`. Make sure to create a `.env` file with your own API keys before running the application.
-
-## Usage
-
-To run the application, navigate to the `src` directory and run the following command:
+2. Open the `.env` file and fill in the required configuration variables:
 
 ```
-streamlit run app.py
+OPENAI_API_KEY='your_openai_api_key'
+ANTHROPIC_API_KEY='your_anthropic_api_key'
+IS_LOCAL='true'
 ```
 
-This will start the Streamlit application. In the web interface, you can:
+3. Run the application:
 
-1. Select the language model to use for generating the README
-2. Enter the names of folders or files to exclude (comma-separated)
-3. Enter the base folder path for generating the README
-4. Click the "Generate ReadMe.md" button to generate the README content
+```
+streamlit run ./src/app.py
+```
 
-The generated README content will be displayed in the web interface.
+4. The application will launch in your default web browser. You will see the following options:
+   - Select the language model you'd like to use from the dropdown menu.
+   - Enter the names of folders or files you'd like to exclude (comma-separated).
+   - Enter the folder you want to generate the README.md from.
+   - The folder structure will be displayed below.
+   - Click the "Generate ReadMe.md" button to generate the README file.
 
-## Code Overview
+5. The generated README.md will be displayed in sections, updating as the application processes each file in the project structure.
 
-The main components of the project are:
+## Acknowledgements
 
-- `app.py`: The main Streamlit application file that sets up the user interface and handles user interactions.
-- `readmewriterassistant/files_manager.py`: Contains the `FilesManager` class responsible for listing files, formatting the file tree, and reading file contents.
-- `readmewriterassistant/llms.py`: Contains the `LLMs` class that manages the available language models and their initialization based on the environment (local or not).
+- OpenAI for providing the language model API
+- Anthropic for providing the language model API
+- Streamlit for the web application framework
+- Poetry for dependency management and packaging
 
-The `App` class in `app.py` uses the `FilesManager` and `LLMs` classes to generate the README content based on the selected language model, excluded files/folders, and the project's file structure and contents.
+## Contributing
+
+We welcome contributions from the community! If you'd like to contribute to Readme Writer Assistant, please follow these steps:
+
+1. Fork the repository
+2. Create a new branch for your feature or bug fix
+3. Make your changes and commit them with descriptive messages
+4. Push your changes to your forked repository
+5. Submit a pull request to the main repository
 
 ## License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.

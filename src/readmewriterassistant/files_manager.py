@@ -46,21 +46,25 @@ class FilesManager:
 
         return print_tree(tree).strip()
     
+    def read_file_content(self, base_path, file):
+        file_path = os.path.join(base_path, file)
+        content = ""
+        if os.path.isfile(file_path):
+            content += f"## {file}:\n\n```\n"
+            with open(file_path, 'r', encoding='utf-8', errors='replace') as file:
+                content += file.read()
+            content += "\n```\n\n"
+        return content.strip()
+
     def read_files_content(self, base_path, items):
         content = ""
         for item in items:
             item_path = os.path.join(base_path, item)
             if os.path.isfile(item_path):
-                content += f"## {item}:\n\n```\n"
-                with open(item_path, 'r', encoding='utf-8', errors='replace') as file:
-                    content += file.read()
-                content += "\n```\n\n"
-            elif os.path.isdir(item_path):
-                for root, dirs, files in os.walk(item_path):
-                    for file in files:
-                        file_path = os.path.relpath(os.path.join(root, file), base_path)
-                        content += f"## {file_path}:\n\n```\n"
-                        with open(os.path.join(root, file), 'r', encoding='utf-8', errors='replace') as file:
-                            content += file.read()
-                        content += "\n```\n\n"
+                content += self.read_file_content(base_path, item)
+            # elif os.path.isdir(item_path):
+            #     for root, dirs, files in os.walk(item_path):
+            #         for file in files:
+            #             file_path = os.path.relpath(os.path.join(root, file), base_path)
+            #             content += self.read_file_content(base_path, file_path)
         return content.strip()
